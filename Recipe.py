@@ -1,33 +1,35 @@
 import random
 
-def welcome_message():
-    print("👋 Welcome to the AI-Powered Recipe Generator!")
-    print("Give me the ingredients you have, and I’ll create a delicious recipe just for you!\n")
+class RecipeGenerator:
+    def __init__(self):
+        self.cooking_methods = ["saute", "fry", "boil", "steam", "grill", "bake"]
+        self.spices = ["turmeric", "red chili powder", "cumin seeds", "garam masala", "coriander powder", "black pepper"]
+        self.herbs = ["coriander leaves", "mint", "basil"]
+        self.oils = ["sunflower oil", "mustard oil", "olive oil"]
+        self.styles = ["Spicy", "Creamy", "Tandoori", "Desi Delight", "Hearty", "Home-Style", "Zesty", "Street-Style"]
 
-def get_ingredients():
-    ingredients = input("👉 Enter your ingredients (separated by commas): ")
-    return [item.strip().capitalize() for item in ingredients.split(",") if item.strip()]
+    def welcome_message(self):
+        print("👋 Welcome to the AI-Powered Recipe Generator!")
+        print("Give me the ingredients you have, and I’ll create a delicious recipe just for you!\n")
 
-def generate_recipe_name(ingredients):
-    styles = ["Spicy", "Creamy", "Tandoori", "Desi Delight", "Hearty", "Home-Style", "Zesty", "Street-Style"]
-    if len(ingredients) >= 2:
-        main = f"{ingredients[0]} & {ingredients[1]}"
-    else:
-        main = ingredients[0]
-    return f"{random.choice(styles)} {main} Curry"
+    def get_ingredients(self):
+        ingredients = input("👉 Enter your ingredients (separated by commas): ")
+        return [item.strip().capitalize() for item in ingredients.split(",") if item.strip()]
 
-def generate_recipe_steps(ingredients):
-    cooking_methods = ["saute", "fry", "boil", "steam", "grill", "bake"]
-    spices = ["turmeric", "red chili powder", "cumin seeds", "garam masala", "coriander powder", "black pepper"]
-    herbs = ["coriander leaves", "mint", "basil"]
-    oils = ["sunflower oil", "mustard oil", "olive oil"]
+    def generate_recipe_name(self, ingredients):
+        if len(ingredients) >= 2:
+            main = f"{ingredients[0]} & {ingredients[1]}"
+        else:
+            main = ingredients[0]
+        return f"{random.choice(self.styles)} {main} Curry"
 
-    method = random.choice(cooking_methods)
-    spice = random.sample(spices, 2)
-    herb = random.choice(herbs)
-    oil = random.choice(oils)
+    def generate_recipe_steps(self, ingredients):
+        method = random.choice(self.cooking_methods)
+        spice = random.sample(self.spices, 2)
+        herb = random.choice(self.herbs)
+        oil = random.choice(self.oils)
 
-    steps = f"""
+        steps = f"""
 🧑‍🍳 Let's prepare your dish using: {', '.join(ingredients)}!
 
 🔪 Preparation:
@@ -49,21 +51,24 @@ def generate_recipe_steps(ingredients):
 
 💡 Tip: Add a little butter or cream to make it richer, especially for special occasions!
 """
-    return steps
+        return steps
 
-def run_recipe_generator():
-    welcome_message()
-    ingredients = get_ingredients()
+    def run(self):
+        self.welcome_message()
+        ingredients = self.get_ingredients()
 
-    if not ingredients:
-        print("⚠️ Please enter at least one ingredient to proceed.")
-        return
+        if not ingredients:
+            print("⚠️ Please enter at least one ingredient to proceed.")
+            return
 
-    recipe_name = generate_recipe_name(ingredients)
-    recipe_steps = generate_recipe_steps(ingredients)
+        recipe_name = self.generate_recipe_name(ingredients)
+        recipe_steps = self.generate_recipe_steps(ingredients)
 
-    print(f"\n🍽️ Your Custom Recipe: {recipe_name}\n")
-    print(recipe_steps)
+        print(f"\n🍽️ Your Custom Recipe: {recipe_name}\n")
+        print(recipe_steps)
+
 
 # Run the tool
-run_recipe_generator()
+if __name__ == "__main__":
+    generator = RecipeGenerator()
+    generator.run()

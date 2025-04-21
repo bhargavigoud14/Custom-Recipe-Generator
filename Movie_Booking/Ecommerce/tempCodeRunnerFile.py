@@ -1,0 +1,1 @@
+print("Registered Users:", UserRegister.get_all_users())
